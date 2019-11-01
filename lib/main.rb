@@ -8,30 +8,33 @@ class Main
       @cart = Cart.new
       items = []
       item_data = ''
+      count = 1
       while item_data != "exit" do
         item_data = get_input("#### Please enter new item > ")
         return if item_data == 'exit'
-        parse_item(item_data)
+        parse_item(item_data, count)
+        count += 1
+        
       end
     end
 
     def process_order
       @subtotal = 0
       ObjectSpace.each_object(Item).each do |line_item|
-        binding.pry
+      
         line_total = line_item.price * line_item.qty
         @subtotal = @subtotal + line_total
-        puts "subtotal: #{@subtotal}"
+        puts "### Item: #{line_item.qty} | #{line_item.description} | line total: #{line_total} "
+        puts "### Running total: #{@subtotal}"
       end  
     end
 
-    def parse_item(item)
+    def parse_item(item, index)
       item_array = item.split(' at ')
       item_qty = item_array[0][/\d+/].to_i
       item_description = item_array[0].split(' ')[1].strip
       item_price = item_array[1].to_f
-      
-      Item.send(:new, item_description, item_price, item_qty)
+      eval("I#{index} = Item.new(item_description, item_price, item_qty)")
     end
 
     def get_input(prompt)
