@@ -2,5 +2,9 @@ class Cart
   require_relative './item.rb'
   require 'pry'
 
-  attr_accessor :sub_total
+  def initialize(items)
+    @items = items
+  end
+
+  attr_accessor :items
 end

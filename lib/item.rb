@@ -4,5 +4,6 @@ class Item
     @price = price
     @qty = qty
   end
-  attr_accessor :description, :price, :qty
+  
+  attr_accessor :items
 end
